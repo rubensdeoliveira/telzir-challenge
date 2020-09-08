@@ -4,9 +4,12 @@
   "scripts": {
     "test": "jest"
   },
-  "workspaces": [
-    "packages/*"
-  ],
+  "workspaces": {
+    "packages": [
+      "packages/*",
+      "packages/shared/*"
+    ]
+  },
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
