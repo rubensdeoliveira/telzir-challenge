@@ -23,7 +23,13 @@ module.exports = {
   },
   plugins: ['react', '@typescript-eslint', 'prettier'],
   rules: {
-    'prettier/prettier': 'error'
+    'prettier/prettier': 'error',
+    '@typescript-eslint/interface-name-prefix': [
+      'error',
+      { 'prefixWithI': 'always' }
+    ],
+    'space-before-function-paren': ['error', 'never'],
+    'no-useless-constructor': 'off'
   },
   settings: {
     'import/resolver': {
