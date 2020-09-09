@@ -4,6 +4,6 @@ import CallsController from '../controllers/CallsController'
 const callsRouter = Router()
 const callsController = new CallsController()
 
-callsRouter.get('/', callsController.show)
+callsRouter.get('/calc', callsController.show)
 
 export default callsRouter

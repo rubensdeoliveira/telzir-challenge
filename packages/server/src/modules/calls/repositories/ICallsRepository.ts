@@ -1,6 +1,9 @@
-import ICalcCallsCostDTO from '../dtos/ICalcCallsCostDTO'
+import ICalcCallCostWithPlanDTO from '../dtos/ICalcCallCostWithPlanDTO'
+import ICalcCallCostWithoutPlanDTO from '../dtos/ICalcCallCostWithoutPlanDTO'
 
-export default interface IAppointmentsRepository {
-  calcCallPriceWithPlan(data: ICalcCallsCostDTO): Promise<number>
-  calcCallPriceWithoutPlan(data: ICalcCallsCostDTO): Promise<number>
+export default interface ICallsRepository {
+  calcCallPriceWithPlan(data: ICalcCallCostWithPlanDTO): number | undefined
+  calcCallPriceWithoutPlan(
+    data: ICalcCallCostWithoutPlanDTO
+  ): number | undefined
 }

@@ -8,10 +8,10 @@ export default class CallsController {
     const calcCallCost = container.resolve(CalcCallsCostService)
 
     const appointment = await calcCallCost.execute({
-      origin: '',
-      destination: '',
-      callDuration: 0,
-      plan: ''
+      origin: '011',
+      destination: '016',
+      callDuration: 30,
+      plan: 'FaleMais 30'
     })
 
     return response.json(appointment)

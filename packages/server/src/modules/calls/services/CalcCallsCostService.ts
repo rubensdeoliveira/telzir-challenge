@@ -16,12 +16,25 @@ class CalcCallsCostService {
     private callsRepository: ICallsRepository
   ) {}
 
-  public async execute({
+  public execute({
     origin,
     destination,
     callDuration,
     plan
-  }: IRequest): Promise<void> {}
+  }: IRequest): number {
+    const callCost = this.callsRepository.calcCallPriceWithPlan({
+      origin,
+      destination,
+      callDuration,
+      plan
+    })
+
+    if (callCost === undefined) {
+      throw new Error('Chamada não encontrado')
+    }
+
+    return callCost
+  }
 }
 
 export default CalcCallsCostService

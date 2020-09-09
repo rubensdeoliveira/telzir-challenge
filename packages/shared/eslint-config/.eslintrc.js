@@ -29,7 +29,8 @@ module.exports = {
       { 'prefixWithI': 'always' }
     ],
     'space-before-function-paren': ['error', 'never'],
-    'no-useless-constructor': 'off'
+    'no-useless-constructor': 'off',
+    '@typescript-eslint/no-useless-constructor': ['error']
   },
   settings: {
     'import/resolver': {

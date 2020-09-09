@@ -4,6 +4,6 @@ import callsRoutes from '@modules/calls/infra/http/routes/calls.routes'
 
 const routes = Router()
 
-routes.use('/', callsRoutes)
+routes.use('/calls', callsRoutes)
 
 export default routes

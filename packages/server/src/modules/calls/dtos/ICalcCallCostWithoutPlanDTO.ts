@@ -1,6 +1,5 @@
-export default interface ICalcCallsCostDTO {
+export default interface ICalcCallCostWithoutPlanDTO {
   origin: string
   destination: string
   callDuration: number
-  plan: string
 }
