@@ -30,7 +30,13 @@ module.exports = {
     ],
     'space-before-function-paren': ['error', 'never'],
     'no-useless-constructor': 'off',
-    '@typescript-eslint/no-useless-constructor': ['error']
+    '@typescript-eslint/no-useless-constructor': ['error'],
+    '@typescript-eslint/no-unused-vars': [
+      'error',
+      {
+        'argsIgnorePattern': '_'
+      }
+    ],
   },
   settings: {
     'import/resolver': {

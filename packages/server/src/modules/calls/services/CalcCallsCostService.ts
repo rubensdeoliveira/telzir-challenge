@@ -1,12 +1,18 @@
 import { injectable, inject } from 'tsyringe'
 
 import ICallsRepository from '../repositories/ICallsRepository'
+import AppError from '@shared/errors/AppError'
 
 interface IRequest {
   origin: string
   destination: string
   callDuration: number
   plan: string
+}
+
+interface IResponse {
+  ComFaleMais: number
+  SemFaleMais: number
 }
 
 @injectable()
@@ -21,19 +27,40 @@ class CalcCallsCostService {
     destination,
     callDuration,
     plan
-  }: IRequest): number {
-    const callCost = this.callsRepository.calcCallPriceWithPlan({
+  }: IRequest): IResponse {
+    const isValidCall = this.callsRepository.isValidCall({
+      origin,
+      destination
+    })
+
+    if (!isValidCall) {
+      throw new AppError('Combinação de origem/destino incorreta')
+    }
+
+    const isValidPlan = this.callsRepository.isValidPlan(plan)
+
+    if (!isValidPlan) {
+      throw new AppError('Plano de chamadas inválido')
+    }
+
+    const costWithPlan = this.callsRepository.calcCallPriceWithPlan({
       origin,
       destination,
       callDuration,
       plan
     })
 
-    if (callCost === undefined) {
-      throw new Error('Chamada não encontrado')
+    const costWithoutPlan = this.callsRepository.calcCallPriceWithoutPlan({
+      origin,
+      destination,
+      callDuration
+    })
+
+    if (costWithPlan === undefined || costWithoutPlan === undefined) {
+      throw new AppError('Ocorreu um erro no cálculo da chamada')
     }
 
-    return callCost
+    return { ComFaleMais: costWithPlan, SemFaleMais: costWithoutPlan }
   }
 }
 

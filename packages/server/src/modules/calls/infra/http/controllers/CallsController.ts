@@ -4,14 +4,18 @@ import { container } from 'tsyringe'
 import CalcCallsCostService from '@modules/calls/services/CalcCallsCostService'
 
 export default class CallsController {
-  public async show(request: Request, response: Response): Promise<Response> {
+  public show(request: Request, response: Response): Response {
+    const { origin, destination, callDuration, plan } = request.query
+
+    console.log(request.query)
+
     const calcCallCost = container.resolve(CalcCallsCostService)
 
-    const appointment = await calcCallCost.execute({
-      origin: '011',
-      destination: '016',
-      callDuration: 30,
-      plan: 'FaleMais 30'
+    const appointment = calcCallCost.execute({
+      origin: String(origin),
+      destination: String(destination),
+      callDuration: Number(callDuration),
+      plan: String(plan)
     })
 
     return response.json(appointment)

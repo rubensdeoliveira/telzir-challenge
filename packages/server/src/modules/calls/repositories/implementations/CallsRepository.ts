@@ -2,6 +2,7 @@ import ICallsRepository from '@modules/calls/repositories/ICallsRepository'
 
 import ICalcCallCostWithPlanDTO from '@modules/calls/dtos/ICalcCallCostWithPlanDTO'
 import ICalcCallCostWithoutPlanDTO from '@modules/calls/dtos/ICalcCallCostWithoutPlanDTO'
+import IIsValidCallDTO from '@modules/calls/dtos/IIsValidCallDTO'
 
 interface ICall {
   origin: string
@@ -30,6 +31,22 @@ class CallsRepository implements ICallsRepository {
     { origin: '018', destination: '011', minuteCost: 1.9 }
   ]
 
+  public isValidCall({ origin, destination }: IIsValidCallDTO): boolean {
+    return Boolean(
+      this.acceptedCalls.find(
+        acceptedCall =>
+          acceptedCall.origin === origin &&
+          acceptedCall.destination === destination
+      )
+    )
+  }
+
+  public isValidPlan(plan: string): boolean {
+    return Boolean(
+      this.acceptedPlans.find(acceptedPlan => acceptedPlan.name === plan)
+    )
+  }
+
   public calcCallPriceWithPlan({
     origin,
     destination,
@@ -47,7 +64,11 @@ class CallsRepository implements ICallsRepository {
     )
 
     if (findedCall && findedPlan) {
-      return (callDuration - findedPlan.discount) * findedCall.minuteCost * 1.1
+      const cost =
+        (callDuration - findedPlan.discount) * findedCall.minuteCost * 1.1
+      const formattedCost = cost > 0 ? Number(cost.toFixed(2)) : 0
+
+      return formattedCost
     } else {
       return undefined
     }
@@ -65,7 +86,10 @@ class CallsRepository implements ICallsRepository {
     )
 
     if (findedCall) {
-      return callDuration * findedCall.minuteCost
+      const cost = callDuration * findedCall.minuteCost
+      const formattedCost = cost > 0 ? Number(cost.toFixed(2)) : 0
+
+      return formattedCost
     } else {
       return undefined
     }
