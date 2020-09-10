@@ -11,8 +11,8 @@ interface IRequest {
 }
 
 interface IResponse {
-  ComFaleMais: number
-  SemFaleMais: number
+  costWithPlan: number
+  costWithoutPlan: number
 }
 
 @injectable()
@@ -60,7 +60,7 @@ class CalcCallsCostService {
       throw new AppError('Ocorreu um erro no cálculo da chamada')
     }
 
-    return { ComFaleMais: costWithPlan, SemFaleMais: costWithoutPlan }
+    return { costWithPlan, costWithoutPlan }
   }
 }
 

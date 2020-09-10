@@ -1,5 +1,12 @@
 import React from 'react'
+import GlobalStyle from './styles/global'
+import Dashboard from './pages/Dashboard'
 
-const App: React.FC = () => <h1>Projeto vazio</h1>
+const App: React.FC = () => (
+  <>
+    <Dashboard />
+    <GlobalStyle />
+  </>
+)
 
 export default App
