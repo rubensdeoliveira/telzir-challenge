@@ -1,10 +1,19 @@
 import styled from 'styled-components'
 
 export const Container = styled.div`
-  padding: 2rem 0;
+  padding: 1rem 0;
+  width: 100%;
+  background-color: var(--color-button-border);
+  margin-bottom: 2.5rem;
+`
+
+export const Content = styled.div`
+  max-width: 960px;
+  margin: 0 auto;
 
   h1 {
     font-size: 2.5rem;
-    color: #383449;
+    color: var(--color-text-primary);
+    color: var(--color-button-border-text);
   }
 `
