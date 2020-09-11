@@ -12,6 +12,9 @@ import Select from '../../components/Select'
 import api from '@telzir-challenge/axios-config'
 import BarChart from '../../components/BarChart'
 import ResultCard from '../../components/ResultCard'
+import * as Yup from 'yup'
+import getValidationErrors from '../../utils/getValidationErrors'
+import { useToast } from '../../hooks/toast'
 
 interface ICalcCallCostData {
   origin: string
@@ -47,6 +50,8 @@ const Dashboard: React.FC = () => {
 
   const formRef = useRef<FormHandles>(null)
 
+  const { addToast } = useToast()
+
   const handlePlanChange = useCallback(({ value }) => {
     setSelectedPlan(value)
   }, [])
@@ -59,6 +64,19 @@ const Dashboard: React.FC = () => {
   const handleSubmit = useCallback(
     async (data: ICalcCallCostData) => {
       try {
+        formRef.current?.setErrors({})
+
+        const schema = Yup.object().shape({
+          callDuration: Yup.number().required('Duração da chamada obrigatória'),
+          origin: Yup.string().required('Selecione o código de origem'),
+          destination: Yup.string().required('Selecione o código de destino'),
+          plan: Yup.string().required('Selecione o plano desejado')
+        })
+
+        await schema.validate(data, {
+          abortEarly: false
+        })
+
         const response = await api.get('calls/calc', {
           params: data
         })
@@ -78,10 +96,28 @@ const Dashboard: React.FC = () => {
           plan: initialPlanOptionsState.find(plan => plan.value === data.plan)
         })
       } catch (err) {
-        console.log(err.response.data.message)
+        if (err instanceof Yup.ValidationError) {
+          const errors = getValidationErrors(err)
+
+          formRef.current?.setErrors(errors)
+
+          addToast({
+            type: 'error',
+            title: 'Erro ao calcular chamada',
+            description: Object.values(errors)[0] || ''
+          })
+
+          return
+        }
+
+        addToast({
+          type: 'error',
+          title: 'Erro ao calcular chamada',
+          description: err.response.data.message
+        })
       }
     },
-    [initialCodeOptionsState, initialPlanOptionsState]
+    [addToast, initialCodeOptionsState, initialPlanOptionsState]
   )
 
   return (

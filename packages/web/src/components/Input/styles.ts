@@ -10,7 +10,6 @@ interface IContainerProps {
 
 export const Container = styled.div<IContainerProps>`
   background: var(--color-input-background);
-  border-radius: 10px;
   padding: 1rem;
   width: 100%;
 

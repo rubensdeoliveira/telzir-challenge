@@ -32,6 +32,7 @@ module.exports = {
     'space-before-function-paren': 'off',
     'react-hooks/rules-of-hooks': 'error',
     'react-hooks/exhaustive-deps': 'warn',
+    'no-unused-expressions': 'off',
     '@typescript-eslint/interface-name-prefix': [
       'error',
       { 'prefixWithI': 'always' }
