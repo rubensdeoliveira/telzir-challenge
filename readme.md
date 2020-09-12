@@ -63,7 +63,7 @@ yarn test
 - Para rodar o relatório de cobertura dos testes entre nas pastas web e server rode `yarn test:coverage`
 ```
 cd packages
-cd server
+cd web
 yarn test:coverage
 ```
 
