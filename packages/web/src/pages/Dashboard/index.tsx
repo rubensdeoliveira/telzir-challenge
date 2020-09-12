@@ -45,8 +45,10 @@ const Dashboard: React.FC = () => {
 
   const [formData, setFormData] = useState({})
 
-  const [callCostWithPlan, setCallCostWithPlan] = useState(null)
-  const [callCostWithoutPlan, setCallCostWithoutPlan] = useState(null)
+  const [callCostWithPlan, setCallCostWithPlan] = useState<number | null>(null)
+  const [callCostWithoutPlan, setCallCostWithoutPlan] = useState<number | null>(
+    null
+  )
 
   const formRef = useRef<FormHandles>(null)
 
@@ -67,7 +69,7 @@ const Dashboard: React.FC = () => {
         formRef.current?.setErrors({})
 
         const schema = Yup.object().shape({
-          callDuration: Yup.number().required('Duração da chamada obrigatória'),
+          callDuration: Yup.number().typeError('Digite um número válido'),
           origin: Yup.string().required('Selecione o código de origem'),
           destination: Yup.string().required('Selecione o código de destino'),
           plan: Yup.string().required('Selecione o plano desejado')
@@ -113,7 +115,7 @@ const Dashboard: React.FC = () => {
         addToast({
           type: 'error',
           title: 'Erro ao calcular chamada',
-          description: err.response.data.message
+          description: 'Ocorreu um erro ao calcular a chamada, tente novamente.'
         })
       }
     },
@@ -145,12 +147,14 @@ const Dashboard: React.FC = () => {
                 name="origin"
                 placeholder="Selecione o código de origem..."
                 options={originOptions}
+                data-testid="origin-field"
               />
 
               <Select
                 name="destination"
                 placeholder="Selecione o código de destino..."
                 options={destinationOptions}
+                data-testid="destination-field"
               />
             </FormRow>
 
@@ -159,6 +163,7 @@ const Dashboard: React.FC = () => {
               options={planOptions}
               placeholder="Selecione o plano..."
               onChange={handlePlanChange}
+              data-testid="plan-field"
             />
 
             <Button type="submit">Calcular</Button>
@@ -171,24 +176,28 @@ const Dashboard: React.FC = () => {
               <ResultCard
                 color="var(--color-result-card-1)"
                 title="Sem plano"
-                cost={callCostWithoutPlan || 0}
+                cost={callCostWithoutPlan}
                 icon={RiEmotionNormalFill}
               />
               <ResultCard
                 color="var(--color-result-card-2)"
                 title={`Plano ${selectedPlan}`}
-                cost={callCostWithPlan || 0}
+                cost={callCostWithPlan}
                 icon={RiEmotionHappyFill}
                 dark
               />
             </ResultCardRow>
             <BarChart
               plan={selectedPlan || ''}
-              costWithPlan={callCostWithPlan || 0}
-              costWithoutPlan={callCostWithoutPlan || 0}
+              costWithPlan={callCostWithPlan}
+              costWithoutPlan={callCostWithoutPlan}
             />
 
-            <button type="button" onClick={handleResetCalc}>
+            <button
+              type="button"
+              onClick={handleResetCalc}
+              data-testid="button-reset-calc"
+            >
               <MdReplay color="var(--color-button-border-text)" size={45} />
             </button>
           </>

@@ -15,5 +15,10 @@ export const Content = styled.div`
     font-size: 2.5rem;
     color: var(--color-text-primary);
     color: var(--color-button-border-text);
+    text-align: center;
+
+    @media (min-width: 1000px) {
+      text-align: left;
+    }
   }
 `

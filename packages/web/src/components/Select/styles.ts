@@ -5,7 +5,11 @@ export const StyledReactSelect = styled(ReactSelect)`
   width: 100%;
 
   & + & {
-    margin-left: 1rem;
+    margin-left: 0;
+
+    @media (min-width: 768px) {
+      margin-left: 1rem;
+    }
   }
 
   .react-select__control {

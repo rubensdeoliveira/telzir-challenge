@@ -16,6 +16,12 @@ export const Content = styled.main`
   flex-direction: column;
   align-items: center;
 
+  padding: 1.2rem;
+
+  @media (min-width: 768px) {
+    padding: 0;
+  }
+
   > button {
     background: var(--color-button-border);
     border: 0;
@@ -40,12 +46,14 @@ export const Content = styled.main`
       font-size: 3rem;
       color: var(--color-text-primary);
       margin-bottom: 0.5rem;
+      text-align: center;
     }
 
     p {
       font-size: 1.1rem;
       color: var(--color-text-secondary);
       margin-bottom: 2rem;
+      text-align: center;
     }
   }
 
@@ -56,12 +64,22 @@ export const Content = styled.main`
 
 export const FormRow = styled.div`
   display: flex;
+  flex-direction: column;
 
   width: 100%;
+
+  @media (min-width: 768px) {
+    flex-direction: row;
+  }
 `
 
 export const ResultCardRow = styled.div`
   display: flex;
+  flex-direction: column;
+
+  @media (min-width: 768px) {
+    flex-direction: row;
+  }
 
   width: 100%;
 `

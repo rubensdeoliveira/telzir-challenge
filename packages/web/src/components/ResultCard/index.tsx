@@ -36,7 +36,7 @@ const ResultCard: React.FC<IResultCardProps> = ({
         <h2>{title}</h2>
       </ContainerRow>
 
-      <p>{costFormatted}</p>
+      <p data-testid="result-card-cost-text">{costFormatted}</p>
     </Container>
   )
 }

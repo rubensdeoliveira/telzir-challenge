@@ -13,8 +13,13 @@ export const Container = styled.div<IContainerProps>`
     `}
 
   width: 100%;
-  margin: 2rem 0;
   padding: 1.5rem;
+
+  margin: 0.5rem 0;
+
+  @media (min-width: 768px) {
+    margin: 2rem 0;
+  }
 
   display: flex;
   flex-direction: column;
@@ -58,7 +63,11 @@ export const Container = styled.div<IContainerProps>`
   }
 
   & + & {
-    margin-left: 1rem;
+    margin-left: 0;
+
+    @media (min-width: 768px) {
+      margin-left: 1rem;
+    }
   }
 `
 
