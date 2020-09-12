@@ -56,10 +56,6 @@ class CalcCallsCostService {
       callDuration
     })
 
-    if (costWithPlan === undefined || costWithoutPlan === undefined) {
-      throw new AppError('Ocorreu um erro no cálculo da chamada')
-    }
-
     return { costWithPlan, costWithoutPlan }
   }
 }
